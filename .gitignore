@@ -1,0 +1,16 @@
+.jscsrc
+.DS_Store
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+tags
+.*.sw[a-z]
+*.un~
+Session.vim
+.sass-cache
+.bundle
+vendor/bundler_gems
+log/*.log
+tmp/**/*
+dump.rdb

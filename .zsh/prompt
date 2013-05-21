@@ -1,0 +1,18 @@
+# modify the prompt to contain git branch name if applicable
+function git_prompt_info {
+  BRANCH="$(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f3)"
+  if ! test -z $BRANCH; then
+    COL="%{$fg[green]%}✓" # Everything's fine
+    [[ $(git log origin/$BRANCH..HEAD 2> /dev/null ) != "" ]] && COL="%{$fg[yellow]%}✗" # We have changes to push
+    [[ $(git status --porcelain 2> /dev/null) != "" ]] && COL="%{$fg[red]%}✗" # We have uncommited changes
+    echo " on %{$fg[magenta]%}$BRANCH%{$reset_color%} $COL%{$reset_color%}"
+  fi
+}
+
+function collapse_pwd {
+  echo $(pwd | sed -e "s,^$HOME,~,")
+}
+
+# setopt promptsubst
+setopt promptsubst
+export PS1='%{$FG[186]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info) %(!.#.$) '
